@@ -1,31 +1,70 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Trash2, ShoppingBag, Minus, Plus } from 'lucide-react';
+import { ArrowLeft, Trash2, ShoppingBag, Minus, Plus, CreditCard, Building2, ShieldCheck, ArrowRight } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import './Cart.css';
 
 const Cart = () => {
-  const { cart, cartTotal, removeFromCart, updateQuantity, clearCart } = useCart();
+  const { cart, cartTotal, removeFromCart, updateQuantity } = useCart();
   const navigate = useNavigate();
 
   if (cart.length === 0) {
     return (
-      <div className="cart-empty">
+      <div className="cart-empty container section">
         <div className="cart-empty-icon">
           <ShoppingBag size={48} strokeWidth={1.5} />
         </div>
-        <h2>Your cart is empty</h2>
-        <p className="text-light">Looks like you haven't added anything to your cart yet.</p>
-        <Link to="/shop" className="btn btn-primary mt-lg">Continue Shopping</Link>
+        <h2>Your Retail Cart is Empty</h2>
+        <p className="text-light" style={{ maxWidth: '480px', margin: '0 auto' }}>
+          Looks like you haven't added any ready-made garments to your retail shopping cart yet.
+        </p>
+        <div className="flex gap-md mt-lg" style={{ flexWrap: 'wrap', justifyContent: 'center' }}>
+          <Link to="/shop" className="btn btn-primary">Shop B2C Garments</Link>
+          <Link to="/fabrics" className="btn btn-outline">Explore B2B Wholesale Fabrics</Link>
+        </div>
+
+        <div className="cart-empty-b2b-note mt-xxl card" style={{ padding: '1.5rem', maxWidth: '540px', textAlign: 'left', background: '#f8fafc', border: '1px solid #bfdbfe' }}>
+          <div className="flex items-center gap-xs mb-xs">
+            <Building2 size={18} color="#1d4ed8" />
+            <strong style={{ color: '#1e3a8a', fontSize: '0.9rem' }}>Are you a B2B / Wholesale Buyer?</strong>
+          </div>
+          <p style={{ fontSize: '0.82rem', color: '#475569', lineHeight: '1.45' }}>
+            Wholesale fabric orders and OEM custom manufacturing require commercial quotations and proforma invoicing. Wholesale items cannot be added to this retail card cart.
+          </p>
+          <Link to="/rfq" style={{ display: 'inline-block', marginTop: '0.75rem', fontSize: '0.82rem', color: '#1d4ed8', fontWeight: 700 }}>
+            Go to B2B Quote Request Portal →
+          </Link>
+        </div>
       </div>
     );
   }
 
   return (
     <div className="cart-page container section">
+      {/* Channel Separation Banner */}
       <div className="cart-header">
-        <h1>Shopping Cart</h1>
-        <p className="text-light">{cart.length} item{cart.length !== 1 ? 's' : ''} in your cart</p>
+        <div className="flex items-center gap-xs mb-xs">
+          <span className="cart-channel-pill">B2C Retail Fashion Cart</span>
+          <span className="cart-channel-sub">Cards & UPI Accepted</span>
+        </div>
+        <h1>Retail Shopping Cart</h1>
+        <p className="text-light">
+          {cart.length} product{cart.length !== 1 ? 's' : ''} ready for direct retail delivery.
+        </p>
+      </div>
+
+      {/* Notice for B2B Wholesale buyers */}
+      <div className="cart-b2b-notice-bar">
+        <Building2 size={18} className="b2b-notice-icon" />
+        <div className="b2b-notice-content">
+          <span>
+            <strong>B2B Wholesale Notice:</strong> This cart is exclusively for consumer retail garment purchases with direct card/UPI checkout. 
+            For wholesale fabric rolls (MOQ: 100+ KG) or OEM apparel manufacturing, submit a quotation request.
+          </span>
+          <Link to="/rfq" className="b2b-notice-link">
+            Request B2B Quote <ArrowRight size={13} />
+          </Link>
+        </div>
       </div>
       
       <div className="cart-layout">
@@ -39,20 +78,21 @@ const Cart = () => {
               <div className="cart-item-details">
                 <div className="cart-item-top">
                   <div>
+                    <span className="cart-item-type-badge">{item.category} • Ready-to-Wear</span>
                     <Link to={`/shop/product/${item.id}`}>
                       <h3 className="cart-item-name">{item.name}</h3>
                     </Link>
                     <p className="cart-item-variant">
-                      {item.selectedColor} / {item.selectedSize}
+                      Selected: <strong>{item.selectedColor}</strong> / Size <strong>{item.selectedSize}</strong>
                     </p>
                   </div>
                   <p className="cart-item-price">₹{(item.price * item.quantity).toLocaleString()}</p>
                 </div>
                 <div className="cart-item-bottom">
                   <div className="cart-qty-control">
-                    <button onClick={() => updateQuantity(index, item.quantity - 1)}><Minus size={14} /></button>
+                    <button onClick={() => updateQuantity(index, item.quantity - 1)} aria-label="Decrease quantity"><Minus size={14} /></button>
                     <span>{item.quantity}</span>
-                    <button onClick={() => updateQuantity(index, item.quantity + 1)}><Plus size={14} /></button>
+                    <button onClick={() => updateQuantity(index, item.quantity + 1)} aria-label="Increase quantity"><Plus size={14} /></button>
                   </div>
                   <button className="cart-remove-btn" onClick={() => removeFromCart(index)}>
                     <Trash2 size={16} /> Remove
@@ -63,39 +103,54 @@ const Cart = () => {
           ))}
         </div>
 
-        {/* Order Summary */}
+        {/* Order Summary with Card Payment Focus */}
         <div className="cart-summary">
           <div className="cart-summary-card">
-            <h3>Order Summary</h3>
+            <h3>Retail Order Summary</h3>
             
             <div className="summary-row">
-              <span>Subtotal</span>
+              <span>Retail Subtotal</span>
               <span>₹{cartTotal.toLocaleString()}</span>
             </div>
             <div className="summary-row">
-              <span>Shipping</span>
+              <span>Standard Shipping</span>
               <span>{cartTotal >= 2000 ? 'Free' : '₹149'}</span>
             </div>
             <div className="summary-row">
-              <span>Taxes</span>
+              <span>GST (18%)</span>
               <span>₹{Math.round(cartTotal * 0.18).toLocaleString()}</span>
             </div>
             
             <div className="summary-total">
-              <span>Total</span>
+              <span>Total Payable</span>
               <span>₹{(cartTotal + (cartTotal < 2000 ? 149 : 0) + Math.round(cartTotal * 0.18)).toLocaleString()}</span>
             </div>
 
             {cartTotal < 2000 && (
-              <p className="free-shipping-note">Add ₹{(2000 - cartTotal).toLocaleString()} more for free shipping!</p>
+              <p className="free-shipping-note">Add ₹{(2000 - cartTotal).toLocaleString()} more for free retail shipping!</p>
             )}
 
             <button className="btn-checkout" onClick={() => navigate('/checkout')}>
-              Proceed to Checkout
+              <CreditCard size={18} style={{ marginRight: '8px' }} />
+              Proceed to Card & UPI Checkout
             </button>
 
+            {/* Accepted Cards Display */}
+            <div className="accepted-cards-box">
+              <span className="accepted-cards-title">Accepted Retail Payment Methods:</span>
+              <div className="accepted-cards-badges">
+                <span className="card-chip">Credit Card</span>
+                <span className="card-chip">Debit Card</span>
+                <span className="card-chip">UPI</span>
+                <span className="card-chip">COD</span>
+              </div>
+              <p className="payment-security-note">
+                <ShieldCheck size={14} color="#10b981" /> 256-Bit Bank-Grade Secure Checkout
+              </p>
+            </div>
+
             <Link to="/shop" className="continue-shopping-link">
-              <ArrowLeft size={16} /> Continue Shopping
+              <ArrowLeft size={16} /> Continue Shopping Garments
             </Link>
           </div>
         </div>

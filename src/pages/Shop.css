@@ -1,8 +1,24 @@
 /* Shop Hero */
 .shop-hero {
   background: var(--color-secondary);
-  padding: 3rem 0;
+  padding: 3.5rem 0 2.5rem;
   text-align: center;
+}
+
+.shop-b2c-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #fdf2f8;
+  color: #be185d;
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  margin-bottom: 0.75rem;
+  border: 1px solid #fbcfe8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .shop-hero h1 {
@@ -13,6 +29,31 @@
 .shop-hero p {
   color: var(--color-text-light);
   font-size: 1.05rem;
+}
+
+.shop-b2b-helper-banner {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 1.25rem;
+  padding: 6px 16px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  color: #1e40af;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.shop-b2b-link {
+  font-weight: 700;
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+.shop-b2b-link:hover {
+  color: #1e3a8a;
 }
 
 /* Shop Layout */

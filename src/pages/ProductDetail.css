@@ -270,6 +270,91 @@
   color: white;
 }
 
+.pdp-channel-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.pdp-channel-badge.b2c {
+  background: #fdf2f8;
+  color: #be185d;
+  border: 1px solid #fbcfe8;
+}
+
+.pdp-retail-payment-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: #065f46;
+  background: #ecfdf5;
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin-top: 1rem;
+  border: 1px solid #a7f3d0;
+}
+
+/* B2B Callout in Retail Page */
+.pdp-b2b-callout {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding: 1.25rem;
+  background: #f8fafc;
+  border: 1px solid #bfdbfe;
+  border-left: 4px solid #2563eb;
+  border-radius: 8px;
+}
+
+.pdp-b2b-header {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 0.85rem;
+}
+
+.pdp-b2b-icon {
+  color: #2563eb;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.pdp-b2b-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1e3a8a;
+  margin-bottom: 4px;
+}
+
+.pdp-b2b-desc {
+  font-size: 0.82rem;
+  color: #475569;
+  line-height: 1.45;
+}
+
+.btn-b2b-quote {
+  display: inline-block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #1d4ed8;
+  background: white;
+  border: 1px solid #93c5fd;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: all var(--transition-fast);
+}
+
+.btn-b2b-quote:hover {
+  background: #2563eb;
+  color: white;
+  border-color: #2563eb;
+}
+
 /* Trust Badges */
 .pdp-trust-badges {
   display: flex;

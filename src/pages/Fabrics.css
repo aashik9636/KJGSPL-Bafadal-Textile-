@@ -1,12 +1,128 @@
+.fabrics-page {
+  padding-bottom: 5rem;
+}
+
+/* B2B Header & Notices */
+.b2b-header-box {
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.b2b-pill-header {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  margin-bottom: 1rem;
+  border: 1px solid #bfdbfe;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.wholesale-notice-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: #fffbeb;
+  border: 1px solid #fef3c7;
+  border-left: 4px solid #d97706;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-top: 1.5rem;
+  text-align: left;
+}
+
+.notice-icon {
+  color: #d97706;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.notice-text {
+  font-size: 0.88rem;
+  color: #92400e;
+  line-height: 1.5;
+}
+
+/* 4-Step Wholesale Procurement Guide */
+.b2b-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  margin-top: 2.5rem;
+}
+
+.b2b-step-card {
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 1.5rem 1.25rem;
+  position: relative;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-fast);
+}
+
+.b2b-step-card:hover {
+  transform: translateY(-2px);
+  border-color: #93c5fd;
+}
+
+.step-num-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 24px;
+  height: 24px;
+  background: #f1f5f9;
+  color: #475569;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.step-icon {
+  color: #2563eb;
+  margin-bottom: 0.75rem;
+}
+
+.b2b-step-card h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #0f172a;
+}
+
+.b2b-step-card p {
+  font-size: 0.8rem;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+/* Fabric Cards */
 .fabric-card {
   display: flex;
   flex-direction: column;
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
 }
 
 .fabric-img-wrapper {
   position: relative;
   aspect-ratio: 4/3;
   overflow: hidden;
+  background: #f8fafc;
 }
 
 .fabric-img {
@@ -17,24 +133,40 @@
 }
 
 .fabric-card:hover .fabric-img {
-  transform: scale(1.05);
+  transform: scale(1.04);
+}
+
+.fabric-b2b-tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #1e3a8a;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
 .fabric-badge {
   position: absolute;
   top: 12px;
   right: 12px;
-  background: var(--color-primary);
-  color: white;
-  padding: 4px 12px;
-  border-radius: var(--radius-full);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.5px;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(6px);
+  color: #f8fafc;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .fabric-info {
-  padding: var(--spacing-lg);
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -43,14 +175,29 @@
 .fabric-name {
   font-family: var(--font-serif);
   font-size: 1.25rem;
+  color: #0f172a;
+}
+
+.fabric-quote-status {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #2563eb;
+  letter-spacing: 0.2px;
+}
+
+.fabric-specs {
+  background: #f8fafc;
+  border-radius: 8px;
+  padding: 0.5rem 0.85rem;
+  border: 1px solid #f1f5f9;
 }
 
 .spec-row {
   display: flex;
   justify-content: space-between;
-  padding: 8px 0;
-  border-bottom: 1px solid var(--color-border);
-  font-size: 0.85rem;
+  padding: 6px 0;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 0.82rem;
 }
 
 .spec-row:last-child {
@@ -58,21 +205,133 @@
 }
 
 .spec-label {
-  color: var(--color-text-light);
+  color: #64748b;
   font-weight: 500;
 }
 
 .spec-value {
   font-weight: 600;
-  color: var(--color-text-main);
+  color: #1e293b;
   text-align: right;
 }
 
 .color-tag {
-  background: var(--color-secondary);
-  color: var(--color-text-main);
+  background: #ffffff;
+  color: #334155;
   padding: 2px 8px;
   border-radius: 4px;
-  font-size: 0.75rem;
+  font-size: 0.74rem;
+  font-weight: 600;
+  border: 1px solid #cbd5e1;
+}
+
+.fabric-actions-wrapper {
+  margin-top: auto;
+  padding-top: 1.25rem;
+}
+
+.fabric-btn-sample {
+  flex: 1;
+  padding: 10px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border: 1px solid #94a3b8;
+  color: #334155;
+}
+
+.fabric-btn-sample:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.fabric-btn-rfq {
+  flex: 2;
+  padding: 10px 14px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  background: #0f172a;
+  color: white;
+}
+
+.fabric-btn-rfq:hover {
+  background: #1e293b;
+}
+
+.fabric-no-cart-note {
+  font-size: 0.72rem;
+  color: #64748b;
+  text-align: center;
+  margin-top: 8px;
   font-weight: 500;
+}
+
+/* OEM Callout Card */
+.b2b-oem-callout-card {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  color: white;
+  padding: 2.5rem 3rem;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.b2b-oem-content h2 {
+  color: white;
+  font-size: 1.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.b2b-oem-content p {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  max-width: 650px;
+  line-height: 1.6;
+}
+
+.b2b-oem-badge {
+  display: inline-block;
+  background: rgba(196, 164, 124, 0.2);
+  color: var(--color-accent);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.75rem;
+}
+
+.b2b-oem-btn {
+  background: var(--color-accent);
+  color: #0f172a;
+  font-weight: 700;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 8px;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.b2b-oem-btn:hover {
+  background: #d4b58e;
+  color: #0f172a;
+}
+
+@media (max-width: 1024px) {
+  .b2b-steps-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .b2b-steps-grid {
+    grid-template-columns: 1fr;
+  }
+  .b2b-oem-callout-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem;
+  }
 }

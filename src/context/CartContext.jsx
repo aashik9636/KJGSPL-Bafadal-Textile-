@@ -37,6 +37,12 @@ export const CartProvider = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, { items: [] });
 
   const addToCart = (product, selectedSize, selectedColor, quantity) => {
+    // Strict Logical Guard: B2B wholesale items cannot be added to retail cart
+    if (!product || product.moq || product.gsm || product.composition || product.category === 'Fabric') {
+      console.warn('Logical Guard: B2B wholesale fabrics cannot be added to retail consumer cart. Please submit an RFQ.');
+      return false;
+    }
+
     dispatch({
       type: 'ADD_TO_CART',
       payload: {
@@ -50,6 +56,7 @@ export const CartProvider = ({ children }) => {
         quantity,
       },
     });
+    return true;
   };
 
   const removeFromCart = (index) => {

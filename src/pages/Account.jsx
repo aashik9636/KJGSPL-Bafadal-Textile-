@@ -18,7 +18,7 @@ const Account = () => {
       <div className="grid grid-cols-4 gap-md mb-xl">
         <div className="card" style={{ padding: '1.5rem', borderLeft: '4px solid var(--color-primary)' }}>
           <div className="flex justify-between items-start mb-sm">
-            <h4 style={{ fontSize: '0.9rem', color: 'var(--color-text-light)' }}>Open Quotes</h4>
+            <h4 style={{ fontSize: '0.9rem', color: 'var(--color-text-light)' }}>Open Quotes (RFQ)</h4>
             <FileText size={20} color="var(--color-text-light)" />
           </div>
           <p style={{ fontSize: '1.8rem', fontWeight: 600 }}>2</p>
@@ -32,10 +32,18 @@ const Account = () => {
         </div>
         <div className="card" style={{ padding: '1.5rem', borderLeft: '4px solid #4caf50' }}>
           <div className="flex justify-between items-start mb-sm">
-            <h4 style={{ fontSize: '0.9rem', color: 'var(--color-text-light)' }}>Active Orders</h4>
+            <h4 style={{ fontSize: '0.9rem', color: 'var(--color-text-light)' }}>Active Production</h4>
             <Truck size={20} color="var(--color-text-light)" />
           </div>
           <p style={{ fontSize: '1.8rem', fontWeight: 600 }}>1</p>
+        </div>
+        <div className="card" style={{ padding: '1.5rem', borderLeft: '4px solid #2563eb' }}>
+          <div className="flex justify-between items-start mb-sm">
+            <h4 style={{ fontSize: '0.9rem', color: 'var(--color-text-light)' }}>B2B Credit Terms</h4>
+            <CheckCircle size={20} color="#2563eb" />
+          </div>
+          <p style={{ fontSize: '1.5rem', fontWeight: 600 }}>Net-30 Days</p>
+          <span style={{ fontSize: '0.75rem', color: '#64748b' }}>Limit: ₹25,00,000</span>
         </div>
       </div>
 

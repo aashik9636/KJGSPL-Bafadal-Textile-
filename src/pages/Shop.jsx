@@ -44,8 +44,16 @@ const Shop = () => {
       {/* Shop Header */}
       <div className="shop-hero">
         <div className="container">
-          <h1>BSTAAR Collection</h1>
-          <p>Premium ready-made garments crafted for everyday comfort and style.</p>
+          <div className="shop-b2c-pill">
+            <span>🛍️ B2C Consumer Retail Store</span>
+          </div>
+          <h1>BSTAAR Garments Collection</h1>
+          <p>Premium ready-made garments crafted for everyday comfort and style • Instant Card & UPI Checkout</p>
+          
+          <div className="shop-b2b-helper-banner">
+            <span>Are you a brand or wholesaler needing 100+ units or bulk fabric rolls?</span>
+            <Link to="/fabrics" className="shop-b2b-link">Switch to B2B Wholesale Portal →</Link>
+          </div>
         </div>
       </div>
 

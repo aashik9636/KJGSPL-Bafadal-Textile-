@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { b2cProducts } from '../data/mockData';
-import { ArrowLeft, ShoppingBag, Heart, Share2, Star, Truck, RotateCcw, Shield } from 'lucide-react';
+import { ArrowLeft, ShoppingBag, Heart, Share2, Star, Truck, RotateCcw, Shield, CreditCard, Building2 } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import gsap from 'gsap';
 import './ProductDetail.css';
@@ -56,7 +56,7 @@ const ProductDetail = () => {
         <div className="breadcrumb">
           <Link to="/">Home</Link>
           <span>/</span>
-          <Link to="/shop">Shop</Link>
+          <Link to="/shop">B2C Retail</Link>
           <span>/</span>
           <Link to={`/shop?category=${product.category}`}>{product.category}</Link>
           <span>/</span>
@@ -82,6 +82,9 @@ const ProductDetail = () => {
         {/* Product Info */}
         <div className="pdp-info-section">
           <div className="pdp-header">
+            <div className="flex items-center gap-xs mb-xs">
+              <span className="pdp-channel-badge b2c">B2C Retail Exclusive</span>
+            </div>
             <p className="pdp-category">{product.category} / {product.type}</p>
             <h1 className="pdp-title">{product.name}</h1>
             <div className="pdp-rating">
@@ -91,7 +94,7 @@ const ProductDetail = () => {
               <span className="pdp-rating-text">4.0 (128 reviews)</span>
             </div>
             <p className="pdp-price">₹{product.price.toLocaleString()}</p>
-            <p className="pdp-tax-info">Inclusive of all taxes</p>
+            <p className="pdp-tax-info">Inclusive of all taxes • Ready for immediate retail dispatch</p>
           </div>
 
           {/* Color Selector */}
@@ -128,7 +131,7 @@ const ProductDetail = () => {
 
           {/* Quantity */}
           <div className="pdp-option-group">
-            <h4 className="pdp-option-label">Quantity</h4>
+            <h4 className="pdp-option-label">Retail Quantity</h4>
             <div className="pdp-quantity">
               <button className="qty-btn" onClick={() => setQuantity(Math.max(1, quantity - 1))}>−</button>
               <span className="qty-value">{quantity}</span>
@@ -142,26 +145,50 @@ const ProductDetail = () => {
               className={`btn-add-to-cart ${addedToCart ? 'added' : ''}`}
               onClick={handleAddToCart}
             >
-              {addedToCart ? '✓ Added to Cart!' : <><ShoppingBag size={20} /> Add to Cart</>}
+              {addedToCart ? '✓ Added to Retail Cart!' : <><ShoppingBag size={20} /> Add to Cart</>}
             </button>
             <button className="btn-buy-now" onClick={() => { handleAddToCart(); navigate('/cart'); }}>
               Buy Now
             </button>
           </div>
 
+          <p className="pdp-retail-payment-note">
+            <CreditCard size={14} color="#059669" />
+            <span><strong>Instant B2C Checkout:</strong> Credit/Debit Cards, UPI, NetBanking, and COD accepted.</span>
+          </p>
+
+          {/* B2B Wholesale Callout */}
+          <div className="pdp-b2b-callout">
+            <div className="pdp-b2b-header">
+              <Building2 size={22} className="pdp-b2b-icon" />
+              <div>
+                <h4 className="pdp-b2b-title">Wholesale & OEM Custom Manufacturing</h4>
+                <p className="pdp-b2b-desc">
+                  Buying 100+ units for your brand or retail chain? Wholesale orders are not added to retail card checkout. We handle custom colors, labels, and commercial B2B invoicing.
+                </p>
+              </div>
+            </div>
+            <Link 
+              to={`/rfq?type=oem&article=${encodeURIComponent(product.name)}`} 
+              className="btn-b2b-quote"
+            >
+              Request Wholesale / OEM Quote (RFQ) →
+            </Link>
+          </div>
+
           {/* Trust Badges */}
           <div className="pdp-trust-badges">
             <div className="trust-badge">
               <Truck size={18} />
-              <span>Free delivery over ₹2000</span>
+              <span>Free retail shipping over ₹2,000</span>
             </div>
             <div className="trust-badge">
               <RotateCcw size={18} />
-              <span>7-day easy returns</span>
+              <span>7-day easy consumer returns</span>
             </div>
             <div className="trust-badge">
               <Shield size={18} />
-              <span>100% genuine product</span>
+              <span>100% genuine Bafadal quality</span>
             </div>
           </div>
         </div>
