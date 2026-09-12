@@ -1,16 +1,31 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { CartProvider } from './context/CartContext';
 import { Navbar, Footer } from './components/Shared';
-import Home from './pages/Home';
-import Shop from './pages/Shop';
-import ProductDetail from './pages/ProductDetail';
-import Cart from './pages/Cart';
-import Checkout from './pages/Checkout';
-import Fabrics from './pages/Fabrics';
-import RFQ from './pages/RFQ';
-import Account from './pages/Account';
-import Dashboard from './pages/Dashboard';
+
+const Home = lazy(() => import('./pages/Home'));
+const Shop = lazy(() => import('./pages/Shop'));
+const ProductDetail = lazy(() => import('./pages/ProductDetail'));
+const Cart = lazy(() => import('./pages/Cart'));
+const Checkout = lazy(() => import('./pages/Checkout'));
+const Fabrics = lazy(() => import('./pages/Fabrics'));
+const RFQ = lazy(() => import('./pages/RFQ'));
+const Account = lazy(() => import('./pages/Account'));
+const Dashboard = lazy(() => import('./pages/Dashboard'));
+
+const PageLoader = () => (
+  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
+    <div style={{
+      width: '40px',
+      height: '40px',
+      border: '3px solid #e2e8f0',
+      borderTopColor: '#0f172a',
+      borderRadius: '50%',
+      animation: 'spin 0.8s linear infinite'
+    }} />
+    <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+  </div>
+);
 
 function App() {
   return (
@@ -19,17 +34,19 @@ function App() {
         <div className="flex flex-col" style={{ minHeight: '100vh' }}>
           <Navbar />
           <main style={{ flex: 1 }}>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/shop" element={<Shop />} />
-              <Route path="/shop/product/:id" element={<ProductDetail />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/checkout" element={<Checkout />} />
-              <Route path="/fabrics" element={<Fabrics />} />
-              <Route path="/rfq" element={<RFQ />} />
-              <Route path="/account" element={<Account />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-            </Routes>
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/shop" element={<Shop />} />
+                <Route path="/shop/product/:id" element={<ProductDetail />} />
+                <Route path="/cart" element={<Cart />} />
+                <Route path="/checkout" element={<Checkout />} />
+                <Route path="/fabrics" element={<Fabrics />} />
+                <Route path="/rfq" element={<RFQ />} />
+                <Route path="/account" element={<Account />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+              </Routes>
+            </Suspense>
           </main>
           <Footer />
         </div>
