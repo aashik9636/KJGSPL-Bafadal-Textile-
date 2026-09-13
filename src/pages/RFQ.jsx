@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import { b2bFabrics, b2bGarments } from '../data/mockData';
-import { Building2, FileText, CheckCircle2, ShieldCheck, ArrowRight, AlertCircle, Trash2, Plus, Globe } from 'lucide-react';
+import { Building2, FileText, CheckCircle2, ShieldCheck, ArrowRight, Trash2, Plus, Globe } from 'lucide-react';
 import { useRfq } from '../context/RfqContext';
 import { useCurrency } from '../context/CurrencyContext';
 import gsap from 'gsap';
@@ -18,7 +18,6 @@ const RFQ = () => {
 
   const formRef = useRef(null);
 
-  // If query params specify an item and RFQ basket is empty, pre-populate it
   useEffect(() => {
     if (fabricId && rfqItems.length === 0) {
       const selectedFabric = b2bFabrics.find(f => f.id === fabricId);
@@ -52,13 +51,12 @@ const RFQ = () => {
     contactName: '',
     email: '',
     phone: '',
-    trnNumber: '', // UAE Tax Registration Number (FTA Compliant)
+    trnNumber: '',
     deliveryLocation: 'Jebel Ali Port, Dubai (FOB)',
     tradeTerms: 'FOB Dubai',
     notes: '',
   });
 
-  // Local quick-add selector
   const [quickAddType, setQuickAddType] = useState('fabric');
   const [selectedCatalogId, setSelectedCatalogId] = useState('');
   const [quickQty, setQuickQty] = useState('200');
@@ -69,8 +67,8 @@ const RFQ = () => {
   useEffect(() => {
     if (formRef.current && !isSubmitted) {
       gsap.fromTo(formRef.current,
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }
       );
     }
   }, [isSubmitted]);
@@ -105,176 +103,129 @@ const RFQ = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const rfqId = `RFQ-DXB-${Math.floor(Math.random() * 90000) + 10000}`;
+    const rfqId = `RFQ-DXB-${Math.floor(Math.random() * 900000) + 100000}`;
     setSubmittedRfqId(rfqId);
     setIsSubmitted(true);
-    // clear basket after submission
     clearRfq();
   };
 
   if (isSubmitted) {
     return (
-      <div className="container section text-center" style={{ minHeight: '60vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-        <div style={{ width: '80px', height: '80px', background: '#ecfdf5', color: '#059669', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.5rem', fontSize: '2.5rem', boxShadow: '0 10px 20px rgba(0,0,0,0.05)', border: '2px solid #a7f3d0' }}>
-          ✓
+      <div className="max-w-2xl mx-auto px-4 py-20 text-center">
+        <div className="w-16 h-16 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mx-auto mb-4">
+          <CheckCircle2 size={36} />
         </div>
-        <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#1d4ed8', textTransform: 'uppercase', letterSpacing: '1px', background: '#eff6ff', padding: '4px 14px', borderRadius: '9999px', marginBottom: '0.5rem', border: '1px solid #bfdbfe' }}>
-          B2B Quotation Submitted • Reference: {submittedRfqId}
-        </span>
-        <h2>Commercial Proforma Quote Request Received</h2>
-        <p className="text-light mt-md" style={{ maxWidth: '560px', fontSize: '1.05rem', lineHeight: '1.6' }}>
-          Thank you, <strong>{formData.companyName || 'Valued Commercial Partner'}</strong>. Your multi-item quotation inquiry has been routed to our Dubai B2B export desk. A formal Proforma Quote with 5% UAE VAT and freight breakdown will be sent to <strong>{formData.email}</strong>.
+        <h1 className="text-2xl sm:text-3xl font-black text-slate-900 mb-2">Commercial RFQ Received!</h1>
+        <p className="text-xs sm:text-sm text-slate-500 mb-6">
+          Your consolidated quotation inquiry has been routed to our Bafadal Dubai trade desk. A formal proforma invoice with 5% UAE VAT and freight incoterms will be emailed within 24 business hours.
         </p>
-        
-        <div className="card mt-xl" style={{ padding: '1.25rem 2rem', background: '#f8fafc', maxWidth: '520px', textAlign: 'left', border: '1px solid #bfdbfe' }}>
-          <div className="flex items-center gap-xs mb-xs">
-            <ShieldCheck size={18} color="#2563eb" />
-            <strong style={{ color: '#1e3a8a', fontSize: '0.9rem' }}>Dubai / UAE Commercial Trade Terms</strong>
+
+        <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6 text-left text-xs mb-8">
+          <div className="flex justify-between border-b border-slate-200 pb-3 mb-3">
+            <span className="text-slate-400">RFQ Invoicing Reference:</span>
+            <span className="font-mono font-bold text-blue-600">{submittedRfqId}</span>
           </div>
-          <p style={{ fontSize: '0.82rem', color: '#475569', margin: 0, lineHeight: '1.5' }}>
-            Orders are billed via FTA TRN-compliant Proforma Invoices with 5% UAE VAT (or Zero-Rated for documented Free Zone export shipments). Settlement via SWIFT Wire Transfer or Documentary Letter of Credit (LC).
-          </p>
+          <div className="flex justify-between border-b border-slate-200 pb-3 mb-3">
+            <span className="text-slate-400">Company Name:</span>
+            <span className="font-bold text-slate-900">{formData.companyName || 'Not specified'}</span>
+          </div>
+          <div className="flex justify-between border-b border-slate-200 pb-3 mb-3">
+            <span className="text-slate-400">Recipient Email:</span>
+            <span className="font-bold text-slate-900">{formData.email}</span>
+          </div>
+          <div className="flex justify-between border-b border-slate-200 pb-3 mb-3">
+            <span className="text-slate-400">Trade Port Incoterms:</span>
+            <span className="font-bold text-slate-900">{formData.tradeTerms} ({formData.deliveryLocation})</span>
+          </div>
+          <div className="flex justify-between font-bold text-slate-900 pt-1">
+            <span>Tax Protocol:</span>
+            <span className="text-emerald-600">5% UAE VAT Proforma (FTA TRN: 100482910200003)</span>
+          </div>
         </div>
 
-        <div className="flex gap-md mt-xl">
-          <button className="btn btn-primary" style={{ padding: '12px 24px' }} onClick={() => navigate('/account')}>View in B2B Portal</button>
-          <button className="btn btn-outline" style={{ padding: '12px 24px' }} onClick={() => navigate('/fabrics')}>Browse More Wholesale Items</button>
-        </div>
+        <Link to="/fabrics" className="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition">
+          Return to Wholesale Catalog
+        </Link>
       </div>
     );
   }
 
   return (
-    <div className="container section" style={{ maxWidth: '900px' }}>
-      {/* Header Banner */}
-      <div className="text-center mb-xl">
-        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: '#eff6ff', color: '#1d4ed8', padding: '4px 14px', borderRadius: '9999px', fontSize: '0.78rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '0.75rem', border: '1px solid #bfdbfe' }}>
-          <Building2 size={15} />
-          <span>B2B Commercial Procurement • Dubai UAE</span>
-        </div>
-        <h1 className="section-title" style={{ marginBottom: '0.5rem' }}>Request for Quotation (RFQ)</h1>
-        <p className="text-light" style={{ fontSize: '1.05rem', maxWidth: '640px', margin: '0 auto' }}>
-          Consolidated quote request for bulk fabric rolls, swatch sample kits, and Bstar wholesale OEM garments.
-        </p>
-        
-        {/* UAE VAT Notice */}
-        <div style={{ background: '#fffbeb', border: '1px solid #fde68a', borderLeft: '4px solid #d97706', padding: '10px 16px', borderRadius: '6px', marginTop: '1.25rem', textAlign: 'left', fontSize: '0.84rem', color: '#92400e', display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <AlertCircle size={20} color="#d97706" style={{ flexShrink: 0 }} />
-          <span>
-            <strong>No Direct Card Checkout:</strong> Wholesale transactions are billed via commercial Proforma Invoices with <strong>5% UAE VAT</strong> and international trade terms (FOB Dubai / Jebel Ali Port or CIF destination).
-          </span>
-        </div>
-      </div>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10" ref={formRef}>
       
-      <div className="card" style={{ padding: '2.5rem', boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }} ref={formRef}>
-        <form onSubmit={handleSubmit}>
+      {/* Header */}
+      <div className="border-b border-slate-200 pb-6 mb-8">
+        <div className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-full mb-2">
+          <span>B2B COMMERCIAL PROCUREMENT • PROFORMA QUOTE BASKET</span>
+        </div>
+        <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">Request Commercial Quotation (RFQ)</h1>
+        <p className="text-xs sm:text-sm text-slate-500 mt-1">
+          Push multiple fabric rolls or garments into this consolidated quote basket to receive official mill rates with 5% UAE VAT.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+        
+        {/* Left 2 Cols: Items & Form */}
+        <div className="lg:col-span-2 space-y-8">
           
-          {/* Section 1: Multi-Item RFQ Basket Display */}
-          <div className="mb-xl">
-            <div className="flex justify-between items-center mb-sm" style={{ borderBottom: '2px solid #f1f5f9', paddingBottom: '0.5rem' }}>
-              <h3 style={{ fontSize: '1.2rem', color: '#0f172a', margin: 0 }}>
-                1. Quotation Items Basket ({rfqItems.length} item{rfqItems.length !== 1 ? 's' : ''})
-              </h3>
-              <span style={{ fontSize: '0.8rem', color: '#2563eb', fontWeight: 600 }}>
-                Consolidated RFQ Pricing ({currency.code})
-              </span>
+          {/* Basket Items List */}
+          <div className="bg-white border border-slate-200 rounded-2xl p-6">
+            <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
+              <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider">
+                Queued Items in Quote Cart ({rfqItems.length})
+              </h2>
+              {rfqItems.length > 0 && (
+                <button 
+                  type="button" 
+                  onClick={clearRfq}
+                  className="text-xs text-slate-400 hover:text-rose-500"
+                >
+                  Clear All
+                </button>
+              )}
             </div>
 
             {rfqItems.length === 0 ? (
-              <div style={{ background: '#f8fafc', border: '1px dashed #cbd5e1', borderRadius: '8px', padding: '1.5rem', textAlign: 'center', margin: '1rem 0' }}>
-                <p style={{ color: '#64748b', fontSize: '0.9rem', marginBottom: '0.75rem' }}>
-                  No items currently pushed to your Quote Cart. You can pick items below or from the catalog.
-                </p>
-                <Link to="/fabrics" className="btn btn-outline" style={{ fontSize: '0.82rem', padding: '6px 14px' }}>
-                  Browse Wholesale Catalog to Push Items →
-                </Link>
+              <div className="text-center py-8 text-xs text-slate-400">
+                <FileText size={28} className="mx-auto mb-2 text-slate-300" />
+                <p>No wholesale items in your quote cart yet.</p>
+                <p className="text-[11px] text-slate-400 mt-1">Select items below or from the fabric catalog to add them.</p>
               </div>
             ) : (
-              <div style={{ overflowX: 'auto', margin: '1rem 0' }}>
-                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.88rem' }}>
-                  <thead>
-                    <tr style={{ background: '#f8fafc', borderBottom: '1px solid #e2e8f0', textAlign: 'left', color: '#475569' }}>
-                      <th style={{ padding: '10px 12px' }}>Item</th>
-                      <th style={{ padding: '10px 12px' }}>Type</th>
-                      <th style={{ padding: '10px 12px', width: '130px' }}>Quantity</th>
-                      <th style={{ padding: '10px 12px' }}>Unit</th>
-                      <th style={{ padding: '10px 12px' }}>Specifications / Notes</th>
-                      <th style={{ padding: '10px 12px', textAlign: 'center' }}>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {rfqItems.map((item, idx) => (
-                      <tr key={`${item.id}-${idx}`} style={{ borderBottom: '1px solid #f1f5f9' }}>
-                        <td style={{ padding: '12px', fontWeight: 600, color: '#0f172a' }}>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            {item.image && (
-                              <img src={item.image} alt="" style={{ width: '36px', height: '36px', objectFit: 'cover', borderRadius: '4px' }} />
-                            )}
-                            <div>
-                              <div>{item.name}</div>
-                              {item.gsm && <span style={{ fontSize: '0.72rem', color: '#64748b' }}>{item.gsm} GSM • {item.composition}</span>}
-                            </div>
-                          </div>
-                        </td>
-                        <td style={{ padding: '12px' }}>
-                          <span style={{ 
-                            fontSize: '0.74rem', 
-                            padding: '2px 8px', 
-                            borderRadius: '4px',
-                            fontWeight: 700,
-                            background: item.requestType === 'sample' ? '#fef3c7' : item.requestType === 'oem' ? '#f3e8ff' : '#eff6ff',
-                            color: item.requestType === 'sample' ? '#92400e' : item.requestType === 'oem' ? '#6b21a8' : '#1e40af'
-                          }}>
-                            {item.requestType === 'sample' ? 'Swatch Kit' : item.requestType === 'oem' ? 'OEM Garment' : 'Fabric Roll'}
-                          </span>
-                        </td>
-                        <td style={{ padding: '12px' }}>
-                          <input 
-                            type="number" 
-                            min="1"
-                            value={item.quantity} 
-                            onChange={(e) => updateRfqItem(idx, 'quantity', e.target.value)}
-                            style={{ width: '100%', padding: '6px 8px', fontSize: '0.85rem', borderRadius: '4px', border: '1px solid #cbd5e1' }}
-                          />
-                        </td>
-                        <td style={{ padding: '12px', color: '#475569', fontWeight: 500 }}>
-                          {item.unit}
-                        </td>
-                        <td style={{ padding: '12px' }}>
-                          <input 
-                            type="text" 
-                            placeholder="Target color, GSM tolerance, packaging..."
-                            value={item.customNotes || ''} 
-                            onChange={(e) => updateRfqItem(idx, 'customNotes', e.target.value)}
-                            style={{ width: '100%', padding: '6px 8px', fontSize: '0.82rem', borderRadius: '4px', border: '1px solid #cbd5e1' }}
-                          />
-                        </td>
-                        <td style={{ padding: '12px', textAlign: 'center' }}>
-                          <button 
-                            type="button" 
-                            onClick={() => removeFromRfq(idx)}
-                            style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', padding: '4px' }}
-                            title="Remove from Quote Basket"
-                          >
-                            <Trash2 size={16} />
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+              <div className="space-y-3">
+                {rfqItems.map((item) => (
+                  <div key={item.id} className="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between gap-4">
+                    <div className="min-w-0 flex-1">
+                      <span className="text-[10px] font-bold text-blue-600 uppercase tracking-wider block">{item.category}</span>
+                      <h4 className="text-xs font-bold text-slate-900 truncate">{item.name}</h4>
+                      <span className="text-[11px] text-slate-500">
+                        Qty: <strong>{item.quantity} {item.unit}</strong> • Color: <strong>{item.targetColor}</strong> • Model: {item.requestType}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                      <button 
+                        type="button" 
+                        onClick={() => removeFromRfq(item.id)}
+                        className="text-slate-400 hover:text-rose-500 p-1"
+                        title="Remove item"
+                      >
+                        <Trash2 size={15} />
+                      </button>
+                    </div>
+                  </div>
+                ))}
               </div>
             )}
 
-            {/* Quick Add Another Item to Basket */}
-            <div style={{ background: '#f8fafc', padding: '12px 16px', borderRadius: '8px', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
-              <span style={{ fontSize: '0.82rem', fontWeight: 700, color: '#334155' }}>
-                + Add Another Item:
-              </span>
+            {/* Quick Add from Catalog */}
+            <div className="mt-4 pt-4 border-t border-slate-100 flex flex-wrap gap-2 items-center">
+              <span className="text-xs font-bold text-slate-600">Quick Add:</span>
               <select 
                 value={quickAddType} 
                 onChange={(e) => { setQuickAddType(e.target.value); setSelectedCatalogId(''); }}
-                style={{ padding: '6px 10px', fontSize: '0.82rem', borderRadius: '4px', border: '1px solid #cbd5e1' }}
+                className="px-2.5 py-1.5 border border-slate-200 rounded-lg text-xs bg-white font-medium"
               >
                 <option value="fabric">Fabric Roll</option>
                 <option value="garment">Wholesale Garment</option>
@@ -283,17 +234,14 @@ const RFQ = () => {
               <select 
                 value={selectedCatalogId} 
                 onChange={(e) => setSelectedCatalogId(e.target.value)}
-                style={{ flex: 1, minWidth: '220px', padding: '6px 10px', fontSize: '0.82rem', borderRadius: '4px', border: '1px solid #cbd5e1' }}
+                className="px-2.5 py-1.5 border border-slate-200 rounded-lg text-xs bg-white font-medium flex-1 min-w-[180px]"
               >
-                <option value="">Select item to push...</option>
-                {quickAddType === 'fabric' 
-                  ? b2bFabrics.map(f => (
-                      <option key={f.id} value={f.id}>{f.name} ({f.gsm} GSM) - MOQ {f.moq} KG</option>
-                    ))
-                  : b2bGarments.map(g => (
-                      <option key={g.id} value={g.id}>{g.name} - MOQ {g.moq} Pcs</option>
-                    ))
-                }
+                <option value="">-- Choose Article --</option>
+                {(quickAddType === 'fabric' ? b2bFabrics : b2bGarments).map(item => (
+                  <option key={item.id} value={item.id}>
+                    {item.name} (MOQ: {item.moq} {item.unit})
+                  </option>
+                ))}
               </select>
 
               <input 
@@ -301,92 +249,154 @@ const RFQ = () => {
                 placeholder="Qty" 
                 value={quickQty} 
                 onChange={(e) => setQuickQty(e.target.value)}
-                style={{ width: '80px', padding: '6px 8px', fontSize: '0.82rem', borderRadius: '4px', border: '1px solid #cbd5e1' }}
+                className="w-20 px-2.5 py-1.5 border border-slate-200 rounded-lg text-xs font-bold"
               />
 
               <button 
                 type="button" 
-                className="btn btn-outline" 
                 onClick={handleQuickAdd}
-                disabled={!selectedCatalogId}
-                style={{ padding: '6px 14px', fontSize: '0.82rem', background: 'white' }}
+                className="px-3 py-1.5 rounded-lg bg-slate-900 text-white text-xs font-bold hover:bg-slate-800 transition"
               >
-                <Plus size={14} style={{ marginRight: '4px' }} />
-                Push to Basket
+                + Add
               </button>
             </div>
           </div>
 
-          {/* Section 2: Business & Corporate Information */}
-          <h3 className="mb-md" style={{ fontSize: '1.2rem', borderBottom: '2px solid #f1f5f9', paddingBottom: '0.5rem', color: '#0f172a' }}>
-            2. Business & Corporate Information
-          </h3>
-          <div className="grid grid-cols-2 gap-md mb-xl">
-            <div>
-              <label>Company / Brand Name *</label>
-              <input required type="text" placeholder="e.g. Gulf Apparel Trading LLC" value={formData.companyName} onChange={e => setFormData({...formData, companyName: e.target.value})} />
+          {/* Company & Shipping Form */}
+          <form onSubmit={handleSubmit} className="bg-white border border-slate-200 rounded-2xl p-6 space-y-4">
+            <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-2">
+              Buyer Commercial Profile
+            </h3>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1">Company / Brand Name *</label>
+                <input 
+                  type="text" 
+                  required
+                  placeholder="e.g. Gulf Apparel Manufacturing Ltd"
+                  value={formData.companyName}
+                  onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
+                  className="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs font-medium focus:outline-none focus:ring-2 focus:ring-blue-600"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1">Contact Officer Name *</label>
+                <input 
+                  type="text" 
+                  required
+                  placeholder="e.g. Tarek Mansour (Procurement Manager)"
+                  value={formData.contactName}
+                  onChange={(e) => setFormData({ ...formData, contactName: e.target.value })}
+                  className="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs font-medium focus:outline-none focus:ring-2 focus:ring-blue-600"
+                />
+              </div>
             </div>
-            <div>
-              <label>Contact Person *</label>
-              <input required type="text" placeholder="Full Name" value={formData.contactName} onChange={e => setFormData({...formData, contactName: e.target.value})} />
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1">Corporate Email Address *</label>
+                <input 
+                  type="email" 
+                  required
+                  placeholder="procurement@brand.com"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  className="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs font-medium focus:outline-none focus:ring-2 focus:ring-blue-600"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1">Direct Phone / WhatsApp *</label>
+                <input 
+                  type="tel" 
+                  required
+                  placeholder="+971 50 123 4567"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  className="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs font-medium focus:outline-none focus:ring-2 focus:ring-blue-600"
+                />
+              </div>
             </div>
-            <div>
-              <label>Corporate Business Email *</label>
-              <input required type="email" placeholder="procurement@company.com" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1">UAE Tax Registration No. (TRN) - If UAE entity</label>
+                <input 
+                  type="text" 
+                  placeholder="100XXXXXXXXX (Optional for export)"
+                  value={formData.trnNumber}
+                  onChange={(e) => setFormData({ ...formData, trnNumber: e.target.value })}
+                  className="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs font-medium focus:outline-none focus:ring-2 focus:ring-blue-600"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1">Requested Trade Term (Incoterm)</label>
+                <select 
+                  value={formData.tradeTerms}
+                  onChange={(e) => setFormData({ ...formData, tradeTerms: e.target.value })}
+                  className="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs font-medium bg-white focus:outline-none focus:ring-2 focus:ring-blue-600"
+                >
+                  <option value="FOB Dubai">FOB Jebel Ali Port, Dubai (Standard)</option>
+                  <option value="CIF Europe">CIF European Ports</option>
+                  <option value="CIF GCC">CIF GCC Ports (Jeddah, Dammam, Doha)</option>
+                  <option value="EXW Dubai">EXW Dubai Warehouse / Free Zone</option>
+                </select>
+              </div>
             </div>
+
             <div>
-              <label>Business Phone / WhatsApp (with country code) *</label>
-              <input required type="tel" placeholder="+971 50 123 4567" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} />
-            </div>
-            
-            {/* FTA TRN */}
-            <div style={{ gridColumn: 'span 2' }}>
-              <label>TRN / Tax Registration Number (FTA UAE / GCC / International) (Optional)</label>
-              <input 
-                type="text" 
-                placeholder="e.g. 100234567800003 (15-digit FTA Tax Registration Number)" 
-                value={formData.trnNumber} 
-                onChange={e => setFormData({...formData, trnNumber: e.target.value})} 
+              <label className="block text-xs font-bold text-slate-700 mb-1">Technical Notes / Custom Pantone Colors / Packaging Specs</label>
+              <textarea 
+                rows={3}
+                placeholder="Include custom Pantone reference codes, private labeling requirements, or target delivery windows..."
+                value={formData.notes}
+                onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+                className="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs font-medium focus:outline-none focus:ring-2 focus:ring-blue-600"
               />
-              <span style={{ fontSize: '0.74rem', color: '#64748b', display: 'block', marginTop: '4px' }}>
-                Used for issuing FTA-compliant 5% UAE VAT commercial invoices. If exporting outside UAE, specify your national tax ID.
-              </span>
+            </div>
+
+            <button 
+              type="submit"
+              disabled={rfqItems.length === 0}
+              className="w-full py-3.5 px-6 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white font-bold text-xs sm:text-sm transition flex items-center justify-center gap-2 shadow-sm"
+            >
+              <span>Submit Consolidated Commercial RFQ ({rfqItems.length} Articles)</span>
+              <ArrowRight size={15} />
+            </button>
+          </form>
+
+        </div>
+
+        {/* Right 1 Col: Compliance & Terms */}
+        <div>
+          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6 sticky top-24 space-y-4 text-xs">
+            <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider">
+              Dubai Trade Terms
+            </h3>
+
+            <div className="p-3.5 bg-white rounded-xl border border-slate-200 space-y-1">
+              <span className="font-bold text-slate-900 block">5% UAE VAT (FTA Tax Compliance)</span>
+              <p className="text-slate-500 text-[11px] leading-relaxed">
+                All proforma documentation is issued under UAE Federal Tax Authority rules (TRN 100482910200003). Export outside GCC is zero-rated upon customs declaration.
+              </p>
+            </div>
+
+            <div className="p-3.5 bg-white rounded-xl border border-slate-200 space-y-1">
+              <span className="font-bold text-slate-900 block">Payment Instrument</span>
+              <p className="text-slate-500 text-[11px] leading-relaxed">
+                Commercial wholesale orders are settled via Telegraphic Bank Wire Transfer (T/T) or Irrevocable Letter of Credit (L/C) at sight.
+              </p>
+            </div>
+
+            <div className="p-3.5 bg-white rounded-xl border border-slate-200 space-y-1">
+              <span className="font-bold text-slate-900 block">Lead Time & Dispatch</span>
+              <p className="text-slate-500 text-[11px] leading-relaxed">
+                Ready fabric rolls dispatch within 7-10 business days. Custom lab dip dyeing and private label OEM assembly take 25-35 business days.
+              </p>
             </div>
           </div>
+        </div>
 
-          {/* Section 3: Delivery & Trade Logistics */}
-          <h3 className="mb-md pt-md" style={{ fontSize: '1.2rem', borderBottom: '2px solid #f1f5f9', paddingBottom: '0.5rem', color: '#0f172a' }}>
-            3. Delivery Destination & Trade Terms
-          </h3>
-          <div className="grid grid-cols-2 gap-md mb-xl">
-            <div>
-              <label>Trade Incoterms *</label>
-              <select value={formData.tradeTerms} onChange={e => setFormData({...formData, tradeTerms: e.target.value})}>
-                <option value="FOB Dubai">FOB Jebel Ali Port, Dubai</option>
-                <option value="CIF Destination">CIF (Delivered to Destination Sea/Air Port)</option>
-                <option value="Ex-Mill Dubai">Ex-Mill Warehouse (Dubai Logistics City)</option>
-                <option value="DDP UAE">DDP Doorstep Delivery within UAE</option>
-              </select>
-            </div>
-            <div>
-              <label>Destination City / Port of Delivery *</label>
-              <input required type="text" placeholder="e.g. Jebel Ali Port (Dubai), Dammam, Jeddah, or London Gateway" value={formData.deliveryLocation} onChange={e => setFormData({...formData, deliveryLocation: e.target.value})} />
-            </div>
-
-            <div style={{ gridColumn: 'span 2' }}>
-              <label>Special Instructions, Lab Dip Requirements, or Packaging Specifications</label>
-              <textarea rows={3} placeholder="Specify GSM tolerance, Pantone shades, customized roll wrapping, barcode labels, target delivery schedule..." value={formData.notes} onChange={e => setFormData({...formData, notes: e.target.value})}></textarea>
-            </div>
-          </div>
-
-          <button 
-            type="submit" 
-            className="btn btn-primary" 
-            style={{ width: '100%', padding: '16px', fontSize: '1.05rem', borderRadius: '8px', letterSpacing: '0.5px' }}
-          >
-            Submit Consolidated RFQ Request ({rfqItems.length} items)
-          </button>
-        </form>
       </div>
     </div>
   );

@@ -11,6 +11,7 @@ const ProductDetail = lazy(() => import('./pages/ProductDetail'));
 const Cart = lazy(() => import('./pages/Cart'));
 const Checkout = lazy(() => import('./pages/Checkout'));
 const Fabrics = lazy(() => import('./pages/Fabrics'));
+const B2BProductDetail = lazy(() => import('./pages/B2BProductDetail'));
 const RFQ = lazy(() => import('./pages/RFQ'));
 const Account = lazy(() => import('./pages/Account'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
@@ -41,11 +42,15 @@ function App() {
                 <Suspense fallback={<PageLoader />}>
                   <Routes>
                     <Route path="/" element={<Home />} />
+                    <Route path="/b2c" element={<Shop />} />
                     <Route path="/shop" element={<Shop />} />
                     <Route path="/shop/product/:id" element={<ProductDetail />} />
                     <Route path="/cart" element={<Cart />} />
                     <Route path="/checkout" element={<Checkout />} />
+                    <Route path="/b2b" element={<Fabrics />} />
                     <Route path="/fabrics" element={<Fabrics />} />
+                    <Route path="/fabrics/:id" element={<B2BProductDetail />} />
+                    <Route path="/fabrics/product/:id" element={<B2BProductDetail />} />
                     <Route path="/rfq" element={<RFQ />} />
                     <Route path="/account" element={<Account />} />
                     <Route path="/dashboard" element={<Dashboard />} />

@@ -14,23 +14,29 @@ export const CURRENCIES = {
 
 export const CurrencyProvider = ({ children }) => {
   const location = useLocation();
-  const [userSelectedCurrency, setUserSelectedCurrency] = useState(() => {
-    return localStorage.getItem('bafadal_currency') || null;
-  });
 
   const isB2B = location.pathname.startsWith('/fabrics') || 
                 location.pathname.startsWith('/rfq') || 
                 location.pathname.startsWith('/account') || 
                 location.pathname.startsWith('/dashboard');
 
-  // Default to USD for B2B, AED for B2C if user hasn't explicitly selected one
-  const currentCurrencyCode = userSelectedCurrency || (isB2B ? 'USD' : 'AED');
-  const currency = CURRENCIES[currentCurrencyCode] || CURRENCIES.AED;
+  const [channelCurrency, setChannelCurrency] = useState({
+    b2c: localStorage.getItem('bafadal_currency_b2c') || 'AED',
+    b2b: localStorage.getItem('bafadal_currency_b2b') || 'USD',
+  });
+
+  const currentCurrencyCode = isB2B ? channelCurrency.b2b : channelCurrency.b2c;
+  const currency = CURRENCIES[currentCurrencyCode] || (isB2B ? CURRENCIES.USD : CURRENCIES.AED);
 
   const setCurrency = (code) => {
     if (CURRENCIES[code]) {
-      setUserSelectedCurrency(code);
-      localStorage.setItem('bafadal_currency', code);
+      if (isB2B) {
+        setChannelCurrency(prev => ({ ...prev, b2b: code }));
+        localStorage.setItem('bafadal_currency_b2b', code);
+      } else {
+        setChannelCurrency(prev => ({ ...prev, b2c: code }));
+        localStorage.setItem('bafadal_currency_b2c', code);
+      }
     }
   };
 
