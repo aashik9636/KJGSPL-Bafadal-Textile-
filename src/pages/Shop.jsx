@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { b2cProducts } from '../data/mockData';
-import { Heart } from 'lucide-react';
+import { Heart, Building2, ShoppingBag } from 'lucide-react';
+import { useCurrency } from '../context/CurrencyContext';
 import gsap from 'gsap';
 import './Shop.css';
 
@@ -10,6 +11,7 @@ const Shop = () => {
   const [typeFilter, setTypeFilter] = useState('All');
   const [priceSort, setPriceSort] = useState('default');
   const containerRef = useRef(null);
+  const { formatPrice, currency } = useCurrency();
   
   const categories = ['All', 'Men', 'Women', 'Kids'];
   const types = ['All', 'T-Shirts', 'Shirts', 'Hoodies', 'Bottoms'];
@@ -45,13 +47,15 @@ const Shop = () => {
       <div className="shop-hero">
         <div className="container">
           <div className="shop-b2c-pill">
-            <span>🛍️ B2C Consumer Retail Store</span>
+            <ShoppingBag size={14} />
+            <span>B2C Retail Store • Amazon / Flipkart Style Direct Shopping</span>
           </div>
-          <h1>BSTAAR Garments Collection</h1>
-          <p>Premium ready-made garments crafted for everyday comfort and style • Instant Card & UPI Checkout</p>
+          <h1>Bstar Garments Collection</h1>
+          <p>Premium ready-made fashion apparel crafted by Bafadal • Standard retail pricing in {currency.code} • Instant Card & COD Checkout</p>
           
           <div className="shop-b2b-helper-banner">
-            <span>Are you a brand or wholesaler needing 100+ units or bulk fabric rolls?</span>
+            <Building2 size={16} color="#1d4ed8" />
+            <span>Are you a boutique, distributor, or brand needing wholesale volumes (100+ pcs or fabric rolls)?</span>
             <Link to="/fabrics" className="shop-b2b-link">Switch to B2B Wholesale Portal →</Link>
           </div>
         </div>
@@ -119,7 +123,8 @@ const Shop = () => {
         {/* Product Grid */}
         <div className="shop-content">
           <div className="shop-toolbar">
-            <p className="results-count">{filteredProducts.length} products</p>
+            <p className="results-count">{filteredProducts.length} Bstar products</p>
+            <span className="currency-active-indicator">Showing prices in {currency.code} ({currency.symbol})</span>
           </div>
 
           <div className="product-grid" ref={containerRef}>
@@ -131,12 +136,13 @@ const Shop = () => {
                     <Heart size={18} />
                   </button>
                   <span className="product-card-tag">{product.category}</span>
+                  <span className="brand-tag-overlay">Bstar</span>
                 </div>
                 <div className="product-card-body">
                   <p className="product-card-type">{product.type}</p>
                   <h3 className="product-card-name">{product.name}</h3>
                   <div className="product-card-footer">
-                    <p className="product-card-price">₹{product.price.toLocaleString()}</p>
+                    <p className="product-card-price">{formatPrice(product.price)}</p>
                     <div className="product-card-colors">
                       {product.colors.slice(0, 3).map(c => (
                         <span key={c} className="color-dot" title={c}></span>

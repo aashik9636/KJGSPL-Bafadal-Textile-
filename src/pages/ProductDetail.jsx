@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { b2cProducts } from '../data/mockData';
-import { ArrowLeft, ShoppingBag, Heart, Share2, Star, Truck, RotateCcw, Shield, CreditCard, Building2 } from 'lucide-react';
+import { ArrowLeft, ShoppingBag, Heart, Share2, Star, Truck, RotateCcw, Shield, CreditCard, Building2, FileText, Check } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { useCurrency } from '../context/CurrencyContext';
+import { useRfq } from '../context/RfqContext';
 import gsap from 'gsap';
 import './ProductDetail.css';
 
@@ -10,6 +12,8 @@ const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { addToCart } = useCart();
+  const { addToRfq } = useRfq();
+  const { formatPrice, currency } = useCurrency();
   const product = b2cProducts.find(p => p.id === id);
   const pageRef = useRef(null);
   
@@ -18,6 +22,7 @@ const ProductDetail = () => {
   const [quantity, setQuantity] = useState(1);
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [addedToCart, setAddedToCart] = useState(false);
+  const [addedToRfqState, setAddedToRfqState] = useState(false);
 
   useEffect(() => {
     if (pageRef.current) {
@@ -44,6 +49,26 @@ const ProductDetail = () => {
     setTimeout(() => setAddedToCart(false), 2000);
   };
 
+  const handlePushToQuoteCart = () => {
+    addToRfq({
+      id: `oem-${product.id}`,
+      name: `${product.name} (Bulk OEM Garment)`,
+      category: 'Wholesale Garment',
+      image: product.image,
+      moq: 100,
+      unit: 'Pieces',
+      colors: product.colors
+    }, {
+      quantity: 100,
+      unit: 'Pieces',
+      requestType: 'oem',
+      targetColor: selectedColor,
+      customNotes: `Bulk inquiry for Bstar brand apparel in ${selectedColor}, size ${selectedSize}. Private labeling required.`
+    });
+    setAddedToRfqState(true);
+    setTimeout(() => setAddedToRfqState(false), 2500);
+  };
+
   // Get related products
   const relatedProducts = b2cProducts
     .filter(p => p.category === product.category && p.id !== product.id)
@@ -56,7 +81,7 @@ const ProductDetail = () => {
         <div className="breadcrumb">
           <Link to="/">Home</Link>
           <span>/</span>
-          <Link to="/shop">B2C Retail</Link>
+          <Link to="/shop">Bstar Retail</Link>
           <span>/</span>
           <Link to={`/shop?category=${product.category}`}>{product.category}</Link>
           <span>/</span>
@@ -83,18 +108,18 @@ const ProductDetail = () => {
         <div className="pdp-info-section">
           <div className="pdp-header">
             <div className="flex items-center gap-xs mb-xs">
-              <span className="pdp-channel-badge b2c">B2C Retail Exclusive</span>
+              <span className="pdp-channel-badge b2c">Bstar Retail • Direct Consumer Fashion</span>
             </div>
-            <p className="pdp-category">{product.category} / {product.type}</p>
+            <p className="pdp-category">Brand: <strong>Bstar</strong> • {product.category} / {product.type}</p>
             <h1 className="pdp-title">{product.name}</h1>
             <div className="pdp-rating">
               {[1,2,3,4,5].map(i => (
                 <Star key={i} size={16} fill={i <= 4 ? '#f59e0b' : 'none'} color="#f59e0b" />
               ))}
-              <span className="pdp-rating-text">4.0 (128 reviews)</span>
+              <span className="pdp-rating-text">4.8 (142 reviews)</span>
             </div>
-            <p className="pdp-price">₹{product.price.toLocaleString()}</p>
-            <p className="pdp-tax-info">Inclusive of all taxes • Ready for immediate retail dispatch</p>
+            <p className="pdp-price">{formatPrice(product.price)}</p>
+            <p className="pdp-tax-info">Price includes 5% UAE VAT • Ready for immediate courier dispatch in UAE & GCC</p>
           </div>
 
           {/* Color Selector */}
@@ -131,7 +156,7 @@ const ProductDetail = () => {
 
           {/* Quantity */}
           <div className="pdp-option-group">
-            <h4 className="pdp-option-label">Retail Quantity</h4>
+            <h4 className="pdp-option-label">Retail Quantity (Pieces)</h4>
             <div className="pdp-quantity">
               <button className="qty-btn" onClick={() => setQuantity(Math.max(1, quantity - 1))}>−</button>
               <span className="qty-value">{quantity}</span>
@@ -145,7 +170,7 @@ const ProductDetail = () => {
               className={`btn-add-to-cart ${addedToCart ? 'added' : ''}`}
               onClick={handleAddToCart}
             >
-              {addedToCart ? '✓ Added to Retail Cart!' : <><ShoppingBag size={20} /> Add to Cart</>}
+              {addedToCart ? '✓ Added to Retail Cart!' : <><ShoppingBag size={20} /> Add to Retail Cart</>}
             </button>
             <button className="btn-buy-now" onClick={() => { handleAddToCart(); navigate('/cart'); }}>
               Buy Now
@@ -154,33 +179,48 @@ const ProductDetail = () => {
 
           <p className="pdp-retail-payment-note">
             <CreditCard size={14} color="#059669" />
-            <span><strong>Instant B2C Checkout:</strong> Credit/Debit Cards, UPI, NetBanking, and COD accepted.</span>
+            <span><strong>Instant B2C Checkout:</strong> Credit/Debit Cards, Apple Pay, and UAE Cash on Delivery accepted.</span>
           </p>
 
-          {/* B2B Wholesale Callout */}
+          {/* B2B Wholesale Callout - Push multiple items to Quote Cart */}
           <div className="pdp-b2b-callout">
             <div className="pdp-b2b-header">
               <Building2 size={22} className="pdp-b2b-icon" />
               <div>
                 <h4 className="pdp-b2b-title">Wholesale & OEM Custom Manufacturing</h4>
                 <p className="pdp-b2b-desc">
-                  Buying 100+ units for your brand or retail chain? Wholesale orders are not added to retail card checkout. We handle custom colors, labels, and commercial B2B invoicing.
+                  Need 100+ units for your boutique, retail chain, or corporate merchandise? Wholesale orders are billed on Proforma Invoice with tiered FOB Dubai rates.
                 </p>
               </div>
             </div>
-            <Link 
-              to={`/rfq?type=oem&article=${encodeURIComponent(product.name)}`} 
-              className="btn-b2b-quote"
-            >
-              Request Wholesale / OEM Quote (RFQ) →
-            </Link>
+            <div className="flex gap-sm mt-sm" style={{ flexWrap: 'wrap' }}>
+              <button 
+                type="button"
+                className="btn btn-outline"
+                style={{ background: 'white', borderColor: '#2563eb', color: '#1d4ed8', fontSize: '0.85rem', padding: '8px 14px', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+                onClick={handlePushToQuoteCart}
+              >
+                {addedToRfqState ? (
+                  <><Check size={16} color="#059669" /> Pushed to Quote Cart!</>
+                ) : (
+                  <><FileText size={15} /> Push to B2B Quote Cart (MOQ 100)</>
+                )}
+              </button>
+              <Link 
+                to={`/rfq?type=oem&article=${encodeURIComponent(product.name)}`} 
+                className="btn-b2b-quote"
+                style={{ padding: '8px 14px', fontSize: '0.85rem' }}
+              >
+                Direct RFQ Request →
+              </Link>
+            </div>
           </div>
 
           {/* Trust Badges */}
           <div className="pdp-trust-badges">
             <div className="trust-badge">
               <Truck size={18} />
-              <span>Free retail shipping over ₹2,000</span>
+              <span>Free UAE retail delivery over {formatPrice(150)}</span>
             </div>
             <div className="trust-badge">
               <RotateCcw size={18} />
@@ -188,7 +228,7 @@ const ProductDetail = () => {
             </div>
             <div className="trust-badge">
               <Shield size={18} />
-              <span>100% genuine Bafadal quality</span>
+              <span>100% genuine Bstar quality</span>
             </div>
           </div>
         </div>
@@ -197,8 +237,8 @@ const ProductDetail = () => {
       {/* Related Products */}
       {relatedProducts.length > 0 && (
         <div className="container section gsap-fade">
-          <h2 className="section-title" style={{ fontSize: '1.8rem' }}>You May Also Like</h2>
-        <div className="product-grid">
+          <h2 className="section-title" style={{ fontSize: '1.8rem' }}>More from Bstar Collection</h2>
+          <div className="product-grid">
             {relatedProducts.map(p => (
               <Link to={`/shop/product/${p.id}`} key={p.id} className="product-card">
                 <div className="product-card-image">
@@ -208,7 +248,7 @@ const ProductDetail = () => {
                 <div className="product-card-body">
                   <h3 className="product-card-name">{p.name}</h3>
                   <div className="product-card-footer">
-                    <p className="product-card-price">₹{p.price.toLocaleString()}</p>
+                    <p className="product-card-price">{formatPrice(p.price)}</p>
                   </div>
                 </div>
               </Link>

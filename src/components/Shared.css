@@ -94,6 +94,154 @@
   margin: 0 2px;
 }
 
+/* Multi-Currency Dropdown Selector */
+.currency-selector-wrapper {
+  position: relative;
+  z-index: 1050;
+}
+
+.currency-trigger-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #f8fafc;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--radius-full);
+  padding: 3px 10px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.currency-trigger-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.currency-flag {
+  font-size: 0.9rem;
+  line-height: 1;
+}
+
+.currency-code {
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.currency-symbol {
+  color: #94a3b8;
+  font-size: 0.68rem;
+}
+
+.currency-chevron {
+  transition: transform 0.2s ease;
+  color: #94a3b8;
+}
+
+.currency-chevron.open {
+  transform: rotate(180deg);
+}
+
+.currency-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  width: 260px;
+  background: #ffffff;
+  color: #0f172a;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  padding: 8px;
+  animation: fadeInDown 0.15s ease-out;
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.currency-dropdown-header {
+  display: flex;
+  flex-direction: column;
+  padding: 6px 8px 8px;
+  border-bottom: 1px solid #f1f5f9;
+  margin-bottom: 6px;
+}
+
+.currency-dropdown-header span:first-child {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #1e293b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.currency-default-hint {
+  font-size: 0.68rem;
+  color: #2563eb;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.currency-dropdown-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.currency-option-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 7px 10px;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s ease;
+  font-family: inherit;
+}
+
+.currency-option-item:hover {
+  background: #f8fafc;
+}
+
+.currency-option-item.active {
+  background: #eff6ff;
+  border-left: 3px solid #2563eb;
+}
+
+.curr-flag {
+  font-size: 1.1rem;
+}
+
+.curr-code {
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: #0f172a;
+  min-width: 34px;
+}
+
+.curr-name {
+  font-size: 0.75rem;
+  color: #64748b;
+  flex: 1;
+}
+
+.curr-symbol-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: #f1f5f9;
+  color: #334155;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
 /* Main Navbar */
 .navbar {
   border-bottom: 1px solid var(--color-border);
@@ -189,6 +337,47 @@
   background: #0f172a;
   color: white;
   border-color: #0f172a;
+}
+
+/* B2B Quote Cart / RFQ Basket Button */
+.b2b-quote-cart-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #eff6ff;
+  color: #1e3a8a;
+  padding: 6px 12px;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  border: 1px solid #bfdbfe;
+}
+
+.b2b-quote-cart-btn:hover {
+  background: #dbeafe;
+  border-color: #93c5fd;
+  transform: translateY(-1px);
+}
+
+.rfq-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #2563eb;
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 800;
+  min-width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  line-height: 1;
+  border: 2px solid white;
+}
+
+.cart-label-sub.b2b-sub {
+  color: #2563eb;
 }
 
 /* B2C Cart Button with Card Checkout Highlight */

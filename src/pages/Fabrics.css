@@ -1,10 +1,10 @@
 .fabrics-page {
-  padding-bottom: 5rem;
+  padding-bottom: 6rem;
 }
 
 /* B2B Header & Notices */
 .b2b-header-box {
-  max-width: 900px;
+  max-width: 920px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -16,26 +16,27 @@
   background: #eff6ff;
   color: #1d4ed8;
   font-size: 0.8rem;
-  font-weight: 700;
-  padding: 6px 14px;
+  font-weight: 800;
+  padding: 6px 16px;
   border-radius: var(--radius-full);
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
   border: 1px solid #bfdbfe;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.8px;
 }
 
 .wholesale-notice-banner {
   display: flex;
   align-items: flex-start;
-  gap: 14px;
+  gap: 16px;
   background: #fffbeb;
-  border: 1px solid #fef3c7;
-  border-left: 4px solid #d97706;
-  border-radius: 8px;
-  padding: 1rem 1.25rem;
-  margin-top: 1.5rem;
+  border: 1.5px solid #fef3c7;
+  border-left: 5px solid #d97706;
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  margin-top: 1.75rem;
   text-align: left;
+  box-shadow: 0 4px 15px rgba(217, 119, 6, 0.08);
 }
 
 .notice-icon {
@@ -45,77 +46,85 @@
 }
 
 .notice-text {
-  font-size: 0.88rem;
+  font-size: 0.92rem;
   color: #92400e;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 /* 4-Step Wholesale Procurement Guide */
 .b2b-steps-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1.25rem;
-  margin-top: 2.5rem;
+  gap: 1.5rem;
+  margin-top: 3rem;
 }
 
 .b2b-step-card {
-  background: white;
-  border: 1px solid var(--color-border);
-  border-radius: 10px;
-  padding: 1.5rem 1.25rem;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 1.75rem 1.5rem;
   position: relative;
-  box-shadow: var(--shadow-sm);
-  transition: transform var(--transition-fast);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
+  transition: all var(--transition-normal);
 }
 
 .b2b-step-card:hover {
-  transform: translateY(-2px);
+  transform: translateY(-4px);
   border-color: #93c5fd;
+  box-shadow: 0 12px 25px -4px rgba(37, 99, 235, 0.1);
 }
 
 .step-num-badge {
   position: absolute;
-  top: 12px;
-  right: 12px;
-  width: 24px;
-  height: 24px;
-  background: #f1f5f9;
-  color: #475569;
+  top: 14px;
+  right: 14px;
+  width: 26px;
+  height: 26px;
+  background: #eff6ff;
+  color: #2563eb;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   font-weight: 800;
 }
 
 .step-icon {
   color: #2563eb;
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
 }
 
 .b2b-step-card h4 {
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   font-weight: 700;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   color: #0f172a;
 }
 
 .b2b-step-card p {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   color: #64748b;
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
 /* Fabric Cards */
 .fabric-card {
   display: flex;
   flex-direction: column;
-  background: white;
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
   overflow: hidden;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 15px rgba(15, 23, 42, 0.04);
+  transition: all var(--transition-normal);
+}
+
+.fabric-card:hover {
+  transform: translateY(-6px);
+  border-color: #93c5fd;
+  box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.12);
 }
 
 .fabric-img-wrapper {
@@ -129,57 +138,59 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform var(--transition-normal);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .fabric-card:hover .fabric-img {
-  transform: scale(1.04);
+  transform: scale(1.08);
 }
 
 .fabric-b2b-tag {
   position: absolute;
-  top: 12px;
-  left: 12px;
+  top: 14px;
+  left: 14px;
   background: #1e3a8a;
   color: white;
-  padding: 4px 10px;
-  border-radius: 4px;
-  font-size: 0.7rem;
-  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 800;
   letter-spacing: 0.5px;
   text-transform: uppercase;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 .fabric-badge {
   position: absolute;
-  top: 12px;
-  right: 12px;
+  top: 14px;
+  right: 14px;
   background: rgba(15, 23, 42, 0.85);
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(8px);
   color: #f8fafc;
-  padding: 4px 10px;
-  border-radius: 4px;
-  font-size: 0.72rem;
-  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 0.74rem;
+  font-weight: 800;
   letter-spacing: 0.3px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 .fabric-info {
-  padding: 1.5rem;
+  padding: 1.75rem;
   display: flex;
   flex-direction: column;
   flex: 1;
 }
 
 .fabric-name {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: 1.25rem;
+  font-weight: 700;
   color: #0f172a;
 }
 
 .fabric-quote-status {
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-weight: 700;
   color: #2563eb;
   letter-spacing: 0.2px;
@@ -187,17 +198,18 @@
 
 .fabric-specs {
   background: #f8fafc;
-  border-radius: 8px;
-  padding: 0.5rem 0.85rem;
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
   border: 1px solid #f1f5f9;
+  margin-top: 1rem;
 }
 
 .spec-row {
   display: flex;
   justify-content: space-between;
-  padding: 6px 0;
+  padding: 7px 0;
   border-bottom: 1px solid #e2e8f0;
-  font-size: 0.82rem;
+  font-size: 0.84rem;
 }
 
 .spec-row:last-child {
@@ -210,113 +222,137 @@
 }
 
 .spec-value {
-  font-weight: 600;
-  color: #1e293b;
+  font-weight: 700;
+  color: #0f172a;
   text-align: right;
 }
 
 .color-tag {
   background: #ffffff;
   color: #334155;
-  padding: 2px 8px;
-  border-radius: 4px;
-  font-size: 0.74rem;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 0.76rem;
   font-weight: 600;
   border: 1px solid #cbd5e1;
 }
 
 .fabric-actions-wrapper {
   margin-top: auto;
-  padding-top: 1.25rem;
+  padding-top: 1.5rem;
 }
 
 .fabric-btn-sample {
   flex: 1;
-  padding: 10px;
-  font-size: 0.82rem;
+  padding: 12px;
+  font-size: 0.85rem;
   font-weight: 600;
-  border: 1px solid #94a3b8;
+  border: 1.5px solid #cbd5e1;
   color: #334155;
+  background: white;
+  border-radius: var(--radius-md);
 }
 
 .fabric-btn-sample:hover {
-  background: #f1f5f9;
+  background: #f8fafc;
+  border-color: #0f172a;
   color: #0f172a;
 }
 
 .fabric-btn-rfq {
   flex: 2;
-  padding: 10px 14px;
-  font-size: 0.82rem;
-  font-weight: 600;
-  background: #0f172a;
+  padding: 12px 16px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
   color: white;
+  border-radius: var(--radius-md);
+  border: none;
 }
 
 .fabric-btn-rfq:hover {
-  background: #1e293b;
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  box-shadow: 0 4px 15px rgba(15, 23, 42, 0.25);
 }
 
 .fabric-no-cart-note {
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   color: #64748b;
   text-align: center;
-  margin-top: 8px;
-  font-weight: 500;
+  margin-top: 10px;
+  font-weight: 600;
 }
 
 /* OEM Callout Card */
 .b2b-oem-callout-card {
   background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
   color: white;
-  padding: 2.5rem 3rem;
-  border-radius: 16px;
+  padding: 3.5rem 3rem;
+  border-radius: 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 2rem;
+  gap: 2.5rem;
+  box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.b2b-oem-callout-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(197, 160, 89, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
 }
 
 .b2b-oem-content h2 {
   color: white;
-  font-size: 1.6rem;
-  margin-bottom: 0.5rem;
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
 }
 
 .b2b-oem-content p {
   color: #94a3b8;
-  font-size: 0.95rem;
-  max-width: 650px;
-  line-height: 1.6;
+  font-size: 1.05rem;
+  max-width: 680px;
+  line-height: 1.65;
 }
 
 .b2b-oem-badge {
   display: inline-block;
-  background: rgba(196, 164, 124, 0.2);
-  color: var(--color-accent);
-  padding: 4px 10px;
-  border-radius: 4px;
-  font-size: 0.72rem;
-  font-weight: 700;
+  background: rgba(212, 175, 55, 0.18);
+  color: #fbbf24;
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.76rem;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 0.75rem;
+  letter-spacing: 0.8px;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(212, 175, 55, 0.3);
 }
 
 .b2b-oem-btn {
-  background: var(--color-accent);
-  color: #0f172a;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: #ffffff;
   font-weight: 700;
   border: none;
-  padding: 14px 24px;
-  border-radius: 8px;
-  gap: 8px;
+  padding: 16px 28px;
+  border-radius: 12px;
+  gap: 10px;
   white-space: nowrap;
+  font-size: 1rem;
+  box-shadow: 0 10px 25px rgba(245, 158, 11, 0.35);
 }
 
 .b2b-oem-btn:hover {
-  background: #d4b58e;
-  color: #0f172a;
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 15px 30px rgba(245, 158, 11, 0.45);
 }
 
 @media (max-width: 1024px) {
@@ -332,6 +368,6 @@
   .b2b-oem-callout-card {
     flex-direction: column;
     align-items: flex-start;
-    padding: 2rem;
+    padding: 2.25rem 1.75rem;
   }
 }
